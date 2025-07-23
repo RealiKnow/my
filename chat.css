@@ -4,6 +4,9 @@
 body {
     font-family: 'Inter', sans-serif;
     overflow-x: hidden; /* Prevent horizontal scroll */
+    display: flex; /* Make body a flex container */
+    flex-direction: column; /* Stack children vertically */
+    min-height: 100vh; /* Ensure body takes full viewport height */
 }
 
 /* Cosmic background animations */
@@ -71,6 +74,36 @@ button:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
+/* Ensure the chat container correctly fills space and allows scrolling */
+.flex-grow {
+    flex-grow: 1; /* Allow it to take all available vertical space */
+    display: flex; /* Make it a flex container for its children */
+    flex-direction: column; /* Stack children vertically */
+    min-height: 0; /* Allow flex item to shrink below content size */
+    /* Add a max-height to the chat container to prevent it from pushing header/footer */
+    /* This ensures that the chatMessages div inside will scroll if content exceeds this height */
+    max-height: calc(100vh - 4rem - 4rem - 24px); /* Approx. viewport height - header height - input area height - some margin */
+    /* Adjust the 4rem, 4rem, 24px values based on exact header/footer heights and margins */
+    /* For example: header (p-4 + mb-4 = ~4rem), input area (mt-6 + py-3 = ~4rem), some additional buffer */
+}
+
+
+/* Ensure chat messages div takes available height and scrolls */
+#chatMessages {
+    flex-grow: 1; /* Allow it to take all available vertical space within its parent */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-bottom: 1rem; /* Add padding at the bottom to prevent messages from touching the input area */
+    /* Ensure messages themselves break words to prevent horizontal overflow */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Message bubble styling to ensure they don't overflow horizontally */
+#chatMessages div > div { /* Targets the actual message bubble div */
+    max-width: 100%; /* Ensure message bubbles don't exceed their parent's width */
+}
+
+
 /* Responsive adjustments for smaller screens */
 @media (max-width: 640px) {
     header {
@@ -79,8 +112,11 @@ button:hover {
     h1 {
         font-size: 2rem;
     }
-    .chat-container {
+    /* Adjust padding for the main chat container on small screens */
+    .flex-grow {
         padding: 1rem;
+        /* Re-calculate max-height for smaller screens if needed */
+        max-height: calc(100vh - 3.5rem - 3.5rem - 20px); /* Adjusted for potentially smaller header/input on mobile */
     }
     #chatInput {
         padding: 0.75rem 1rem;
