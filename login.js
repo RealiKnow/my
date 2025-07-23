@@ -27,12 +27,15 @@ const registerErrorDiv = document.getElementById('registerError');
 function displayError(element, message) {
     element.textContent = message;
     element.classList.remove('hidden');
+    // Optional: Add a temporary class for animation or emphasis if needed
+    // element.classList.add('animate-shake'); // Example, requires CSS for animate-shake
 }
 
 // Function to hide error messages
 function hideError(element) {
     element.textContent = '';
     element.classList.add('hidden');
+    // element.classList.remove('animate-shake'); // Remove animation class
 }
 
 // Check authentication state on page load
@@ -56,22 +59,32 @@ loginForm.addEventListener('submit', async (e) => {
         await signInWithEmailAndPassword(auth, email, password);
         // User logged in successfully, onAuthStateChanged will handle redirection
     } catch (error) {
-        let errorMessage = "An unknown error occurred.";
+        let errorMessage = "An unexpected error occurred. Please try again.";
         switch (error.code) {
-            case 'auth/user-not-found':
-                errorMessage = 'No user found with this email.';
+            case 'auth/invalid-credential':
+                errorMessage = 'Invalid email or password. Please check your credentials and try again.';
                 break;
-            case 'auth/wrong-password':
-                errorMessage = 'Incorrect password.';
+            case 'auth/user-not-found': // Included for clarity, though invalid-credential often covers this
+                errorMessage = 'No user found with this email. Please register or try again.';
+                break;
+            case 'auth/wrong-password': // Included for clarity, though invalid-credential often covers this
+                errorMessage = 'Incorrect password. Please try again.';
                 break;
             case 'auth/invalid-email':
-                errorMessage = 'Invalid email address.';
+                errorMessage = 'The email address is not valid. Please enter a valid email.';
                 break;
             case 'auth/user-disabled':
-                errorMessage = 'This account has been disabled.';
+                errorMessage = 'This account has been disabled. Please contact support for assistance.';
+                break;
+            case 'auth/too-many-requests':
+                errorMessage = 'Too many failed login attempts. Please try again later.';
+                break;
+            case 'auth/network-request-failed':
+                errorMessage = 'Network error. Please check your internet connection and try again.';
                 break;
             default:
-                errorMessage = error.message;
+                console.error("Login Error:", error.code, error.message); // Log full error for debugging
+                errorMessage = 'Login failed. Please verify your email and password.';
         }
         displayError(loginErrorDiv, errorMessage);
     }
@@ -87,12 +100,12 @@ registerForm.addEventListener('submit', async (e) => {
     const confirmPassword = registerForm.confirmPassword.value;
 
     if (password !== confirmPassword) {
-        displayError(registerErrorDiv, 'Passwords do not match.');
+        displayError(registerErrorDiv, 'Passwords do not match. Please ensure both passwords are the same.');
         return;
     }
 
     if (password.length < 6) {
-        displayError(registerErrorDiv, 'Password should be at least 6 characters.');
+        displayError(registerErrorDiv, 'Password should be at least 6 characters long for security.');
         return;
     }
 
@@ -100,19 +113,23 @@ registerForm.addEventListener('submit', async (e) => {
         await createUserWithEmailAndPassword(auth, email, password);
         // User registered successfully, onAuthStateChanged will handle redirection
     } catch (error) {
-        let errorMessage = "An unknown error occurred.";
+        let errorMessage = "An unexpected error occurred during registration. Please try again.";
         switch (error.code) {
             case 'auth/email-already-in-use':
-                errorMessage = 'This email is already in use.';
+                errorMessage = 'This email is already registered. Please log in or use a different email.';
                 break;
             case 'auth/invalid-email':
-                errorMessage = 'Invalid email address.';
+                errorMessage = 'The email address is not valid. Please enter a valid email.';
                 break;
             case 'auth/weak-password':
-                errorMessage = 'Password is too weak.';
+                errorMessage = 'Password is too weak. Please choose a stronger password with at least 6 characters.';
+                break;
+            case 'auth/network-request-failed':
+                errorMessage = 'Network error. Please check your internet connection and try again.';
                 break;
             default:
-                errorMessage = error.message;
+                console.error("Registration Error:", error.code, error.message); // Log full error for debugging
+                errorMessage = 'Registration failed. Please try again with valid credentials.';
         }
         displayError(registerErrorDiv, errorMessage);
     }
