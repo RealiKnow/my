@@ -1,0 +1,96 @@
+/* Custom CSS for cosmic theme and animations */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Cosmic background animations */
+@keyframes pulse {
+    0% {
+        transform: scale(0.8) translate(-50%, -50%);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.2) translate(-50%, -50%);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(0.8) translate(-50%, -50%);
+        opacity: 0.3;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 6s infinite ease-in-out;
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+
+/* Custom scrollbar for chat messages */
+#chatMessages::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chatMessages::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+#chatMessages::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.7); /* Tailwind purple-500 */
+    border-radius: 10px;
+}
+
+#chatMessages::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 1);
+}
+
+/* Input and button styling */
+input {
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5); /* Tailwind purple-500 with opacity */
+}
+
+button {
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 640px) {
+    header {
+        padding: 1rem;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    .chat-container {
+        padding: 1rem;
+    }
+    #chatInput {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+    #sendButton {
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+    }
+    .max-w-xs {
+        max-width: 90%; /* Adjust max-width for messages on small screens */
+    }
+}
