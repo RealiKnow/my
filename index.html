@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAZ - Loading...</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for loading spinner -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="font-inter bg-gradient-to-br from-gray-900 to-black min-h-screen flex items-center justify-center p-4">
+    <div class="text-center text-white relative z-10">
+        <i class="fas fa-spinner fa-spin text-6xl text-purple-400 mb-4"></i>
+        <p class="text-xl">Loading MAZ...</p>
+        <p class="text-sm text-gray-400 mt-2">Checking authentication status.</p>
+    </div>
+
+    <!-- Cosmic background elements (same as other pages for consistency) -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute w-24 h-24 bg-purple-500 rounded-full mix-blend-screen opacity-30 -top-10 -left-10 animate-pulse"></div>
+        <div class="absolute w-32 h-32 bg-blue-500 rounded-full mix-blend-screen opacity-30 -bottom-16 -right-16 animate-pulse animation-delay-2000"></div>
+        <div class="absolute w-20 h-20 bg-pink-500 rounded-full mix-blend-screen opacity-30 top-1/4 left-3/4 animate-pulse animation-delay-4000"></div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
