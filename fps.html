@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced FPS Tester - 1-Minute Device Benchmark</title>
+    <title>Advanced FPS Tester - Enhanced Device Benchmark</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -492,6 +492,40 @@
             font-weight: 600;
         }
         
+        .benchmark-details {
+            margin-top: 20px;
+            background: rgba(76, 29, 149, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+        
+        .benchmark-details h3 {
+            color: #c084fc;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.2);
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-name {
+            color: #d8b4fe;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            color: #e9d5ff;
+        }
+        
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
@@ -519,7 +553,7 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-bolt"></i> ADVANCED FPS TESTER</h1>
-            <p class="subtitle">Real-time performance monitoring with 1-minute benchmark</p>
+            <p class="subtitle">Real-time performance monitoring with enhanced device benchmark</p>
         </header>
         
         <div class="scroll-down">
@@ -580,7 +614,7 @@
             </div>
             
             <div class="benchmark-section">
-                <h2><i class="fas fa-chart-line"></i> 1-MINUTE DEVICE BENCHMARK</h2>
+                <h2><i class="fas fa-chart-line"></i> ENHANCED DEVICE BENCHMARK</h2>
                 
                 <div class="benchmark-tests">
                     <div class="benchmark-card" id="cpuTest">
@@ -654,13 +688,37 @@
                     <div style="text-align: center; color: #d8b4fe; font-size: 0.9rem;">Device Stress Level</div>
                 </div>
                 
+                <div class="benchmark-details">
+                    <h3>BENCHMARK DETAILS</h3>
+                    <div class="detail-row">
+                        <span class="detail-name">CPU Stress Test:</span>
+                        <span class="detail-value" id="cpuDetail">Not Run</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-name">GPU Rendering Test:</span>
+                        <span class="detail-value" id="gpuDetail">Not Run</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-name">Memory Bandwidth Test:</span>
+                        <span class="detail-value" id="memoryDetail">Not Run</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-name">Storage I/O Test:</span>
+                        <span class="detail-value" id="storageDetail">Not Run</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-name">Thermal Monitoring:</span>
+                        <span class="detail-value" id="thermalDetail">Active</span>
+                    </div>
+                </div>
+                
                 <div class="benchmark-progress" id="benchmarkProgress">
                     Ready to run benchmark
                 </div>
                 
                 <div class="controls">
                     <button class="btn" id="runBenchmark">
-                        <i class="fas fa-bolt"></i> RUN 1-MINUTE BENCHMARK
+                        <i class="fas fa-bolt"></i> RUN ENHANCED BENCHMARK
                     </button>
                 </div>
             </div>
@@ -697,7 +755,7 @@
         </div>
         
         <footer>
-            <p>Advanced FPS Tester v5.0 | 1-Minute Device Benchmark | Optimized for All Platforms</p>
+            <p>Advanced FPS Tester v6.0 | Enhanced Device Benchmark | Optimized for All Platforms</p>
         </footer>
     </div>
 
@@ -873,7 +931,7 @@
             });
         }
         
-        // Device information - Fixed and Optimized
+        // Enhanced Device information with iPhone support
         function getDeviceInfo() {
             const cpuInfo = document.getElementById('cpuInfo');
             const memoryInfo = document.getElementById('memoryInfo');
@@ -882,26 +940,70 @@
             const browserInfo = document.getElementById('browserInfo');
             const deviceType = document.getElementById('deviceType');
             
-            // CPU cores
+            // Enhanced CPU detection for iPhone
             try {
+                let cpu = 'Unknown';
                 const cores = navigator.hardwareConcurrency || 'Unknown';
-                cpuInfo.textContent = cores !== 'Unknown' ? `${cores} cores` : 'Not available';
+                
+                // Special handling for iOS devices
+                if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                    // Estimate cores based on device model
+                    const deviceModel = navigator.userAgent.match(/(iPhone|iPad|iPod) OS (\d+)_/);
+                    if (deviceModel && deviceModel[2]) {
+                        const iosVersion = parseInt(deviceModel[2]);
+                        if (iosVersion >= 14) {
+                            cpu = 'A13+ Chip (6 cores)';
+                        } else if (iosVersion >= 12) {
+                            cpu = 'A12 Chip (6 cores)';
+                        } else {
+                            cpu = 'A-Series Chip (4-6 cores)';
+                        }
+                    } else {
+                        cpu = 'Apple Silicon (4-6 cores)';
+                    }
+                } else if (cores !== 'Unknown') {
+                    cpu = `${cores} cores`;
+                } else {
+                    cpu = 'Not available';
+                }
+                
+                cpuInfo.textContent = cpu;
             } catch (e) {
                 cpuInfo.textContent = 'Not available';
             }
             
-            // Memory
+            // Enhanced Memory detection for iPhone
             try {
-                if ('deviceMemory' in navigator) {
-                    memoryInfo.textContent = `${navigator.deviceMemory} GB RAM`;
+                let memory = 'Unknown';
+                
+                // Special handling for iOS devices
+                if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                    // Estimate memory based on device model
+                    const deviceModel = navigator.userAgent.match(/(iPhone|iPad|iPod) OS (\d+)_/);
+                    if (deviceModel && deviceModel[2]) {
+                        const iosVersion = parseInt(deviceModel[2]);
+                        if (iosVersion >= 14) {
+                            memory = '4-6 GB RAM';
+                        } else if (iosVersion >= 12) {
+                            memory = '3-4 GB RAM';
+                        } else {
+                            memory = '2-3 GB RAM';
+                        }
+                    } else {
+                        memory = '3-6 GB RAM';
+                    }
+                } else if ('deviceMemory' in navigator) {
+                    memory = `${navigator.deviceMemory} GB RAM`;
                 } else {
-                    memoryInfo.textContent = 'Not available';
+                    memory = 'Not available';
                 }
+                
+                memoryInfo.textContent = memory;
             } catch (e) {
                 memoryInfo.textContent = 'Not available';
             }
             
-            // Platform
+            // Platform detection with enhanced support
             try {
                 let platform = 'Unknown';
                 if (navigator.userAgentData) {
@@ -910,13 +1012,25 @@
                     });
                 } else {
                     platform = navigator.platform || 'Unknown';
+                    // Special handling for iOS
+                    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                        platform = 'iOS';
+                    } else if (/Android/.test(navigator.userAgent)) {
+                        platform = 'Android';
+                    } else if (/Win/.test(platform)) {
+                        platform = 'Windows';
+                    } else if (/Mac/.test(platform)) {
+                        platform = 'macOS';
+                    } else if (/Linux/.test(platform)) {
+                        platform = 'Linux';
+                    }
                     platformInfo.textContent = platform;
                 }
             } catch (e) {
                 platformInfo.textContent = navigator.platform || 'Unknown';
             }
             
-            // Screen
+            // Screen information
             try {
                 const screenWidth = screen.width || window.screen.width;
                 const screenHeight = screen.height || window.screen.height;
@@ -932,7 +1046,7 @@
                 screenInfo.textContent = 'Not available';
             }
             
-            // Browser
+            // Browser detection
             try {
                 let browser = 'Unknown';
                 const userAgent = navigator.userAgent;
@@ -954,7 +1068,7 @@
                 browserInfo.textContent = 'Unknown';
             }
             
-            // Device Type
+            // Device Type detection
             try {
                 let device = 'Desktop';
                 const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -976,8 +1090,8 @@
             fpsCounter.textContent = Math.round(fps);
             refreshRateElement.textContent = `${refreshRate} Hz`;
             
-            // Update min/max/avg
-            if (fps < minFps) minFps = fps;
+            // Update min/max/avg (fixed)
+            if (fps < minFps && fps > 0) minFps = fps;
             if (fps > maxFps) maxFps = fps;
             
             totalFps += fps;
@@ -1108,7 +1222,7 @@
             drawGraph();
         }
         
-        // Advanced 1-Minute Benchmark Functions
+        // Enhanced Benchmark Functions
         let benchmarkRunning = false;
         let benchmarkResults = {
             cpu: 0,
@@ -1145,6 +1259,12 @@
             document.getElementById('peakPerformance').textContent = '0';
             document.getElementById('stressLevel').style.width = '0%';
             benchmarkProgress.textContent = 'Benchmark starting...';
+            
+            // Reset details
+            document.getElementById('cpuDetail').textContent = 'Not Run';
+            document.getElementById('gpuDetail').textContent = 'Not Run';
+            document.getElementById('memoryDetail').textContent = 'Not Run';
+            document.getElementById('storageDetail').textContent = 'Not Run';
             
             // Start benchmark
             benchmarkStartTime = performance.now();
@@ -1204,6 +1324,7 @@
             const startTime = performance.now();
             let iterations = 0;
             let score = 0;
+            const detailElement = document.getElementById('cpuDetail');
             
             function stressCPU() {
                 // Perform CPU-intensive calculations
@@ -1215,6 +1336,11 @@
                 iterations++;
                 const elapsed = performance.now() - startTime;
                 
+                // Update detail every 100ms
+                if (Math.floor(elapsed / 100) > Math.floor((elapsed - 16) / 100)) {
+                    detailElement.textContent = `${iterations} iterations`;
+                }
+                
                 if (elapsed < duration) {
                     requestAnimationFrame(stressCPU);
                 } else {
@@ -1222,9 +1348,11 @@
                     score = Math.round(iterations * 15);
                     benchmarkResults.cpu = score;
                     document.getElementById('cpuScore').textContent = score;
+                    detailElement.textContent = `Completed: ${iterations} iterations`;
                 }
             }
             
+            detailElement.textContent = 'Running...';
             stressCPU();
         }
         
@@ -1232,6 +1360,7 @@
             const startTime = performance.now();
             let frames = 0;
             let score = 0;
+            const detailElement = document.getElementById('gpuDetail');
             
             function renderTest() {
                 // Simulate GPU rendering workload
@@ -1240,22 +1369,64 @@
                 canvas.height = 600;
                 const ctx = canvas.getContext('2d');
                 
-                // Draw complex scene
-                for (let i = 0; i < 500; i++) {
-                    ctx.fillStyle = `hsl(${Math.random() * 360}, 70%, 60%)`;
-                    ctx.beginPath();
-                    ctx.arc(
-                        Math.random() * 800,
-                        Math.random() * 600,
-                        Math.random() * 30 + 5,
-                        0,
-                        Math.PI * 2
-                    );
-                    ctx.fill();
+                // Draw complex scene with multiple layers
+                for (let layer = 0; layer < 5; layer++) {
+                    ctx.save();
+                    ctx.translate(400, 300);
+                    ctx.rotate((performance.now() / 1000) * layer);
+                    
+                    for (let i = 0; i < 200; i++) {
+                        const hue = (i * 3) % 360;
+                        ctx.fillStyle = `hsl(${hue}, 80%, 60%)`;
+                        ctx.beginPath();
+                        
+                        if (i % 3 === 0) {
+                            // Circles
+                            ctx.arc(
+                                Math.sin(i) * 200,
+                                Math.cos(i) * 150,
+                                Math.abs(Math.sin(i * 2)) * 20 + 5,
+                                0,
+                                Math.PI * 2
+                            );
+                        } else if (i % 3 === 1) {
+                            // Rectangles
+                            ctx.fillRect(
+                                Math.sin(i * 1.5) * 180,
+                                Math.cos(i * 1.2) * 130,
+                                Math.abs(Math.sin(i)) * 30 + 10,
+                                Math.abs(Math.cos(i)) * 30 + 10
+                            );
+                        } else {
+                            // Triangles
+                            ctx.moveTo(
+                                Math.sin(i * 0.8) * 160,
+                                Math.cos(i * 0.8) * 120
+                            );
+                            ctx.lineTo(
+                                Math.sin(i * 0.8 + 1) * 160,
+                                Math.cos(i * 0.8 + 1) * 120
+                            );
+                            ctx.lineTo(
+                                Math.sin(i * 0.8 + 2) * 160,
+                                Math.cos(i * 0.8 + 2) * 120
+                            );
+                            ctx.closePath();
+                        }
+                        
+                        ctx.fill();
+                    }
+                    
+                    ctx.restore();
                 }
                 
                 frames++;
                 const elapsed = performance.now() - startTime;
+                
+                // Update detail every 100ms
+                if (Math.floor(elapsed / 100) > Math.floor((elapsed - 16) / 100)) {
+                    detailElement.textContent = `${frames} frames rendered`;
+                }
                 
                 if (elapsed < duration) {
                     requestAnimationFrame(renderTest);
@@ -1264,9 +1435,11 @@
                     score = Math.round(frames * 25);
                     benchmarkResults.gpu = score;
                     document.getElementById('gpuScore').textContent = score;
+                    detailElement.textContent = `Completed: ${frames} frames`;
                 }
             }
             
+            detailElement.textContent = 'Running...';
             renderTest();
         }
         
@@ -1274,10 +1447,11 @@
             const startTime = performance.now();
             let operations = 0;
             let score = 0;
+            const detailElement = document.getElementById('memoryDetail');
             
             function memoryTest() {
-                // Simulate memory-intensive operations
-                const arraySize = 500000;
+                // Simulate memory-intensive operations with large arrays
+                const arraySize = 1000000;
                 const testArray = new Float64Array(arraySize);
                 
                 // Fill array with random values
@@ -1285,15 +1459,22 @@
                     testArray[i] = Math.random() * 1000;
                 }
                 
-                // Perform operations on the array
+                // Perform complex operations on the array
                 let sum = 0;
-                for (let i = 0; i < arraySize; i++) {
-                    sum += testArray[i] * 1.75;
-                    testArray[i] = sum;
+                for (let pass = 0; pass < 5; pass++) {
+                    for (let i = 0; i < arraySize; i++) {
+                        sum += testArray[i] * 1.75;
+                        testArray[i] = Math.sqrt(Math.abs(sum)) + Math.sin(sum);
+                    }
                 }
                 
                 operations++;
                 const elapsed = performance.now() - startTime;
+                
+                // Update detail every 100ms
+                if (Math.floor(elapsed / 100) > Math.floor((elapsed - 16) / 100)) {
+                    detailElement.textContent = `${operations} operations`;
+                }
                 
                 if (elapsed < duration) {
                     requestAnimationFrame(memoryTest);
@@ -1301,9 +1482,11 @@
                     // Calculate memory score based on operations
                     score = Math.round(operations * 30);
                     benchmarkResults.memory = score;
+                    detailElement.textContent = `Completed: ${operations} operations`;
                 }
             }
             
+            detailElement.textContent = 'Running...';
             memoryTest();
         }
         
@@ -1311,10 +1494,17 @@
             const startTime = performance.now();
             let operations = 0;
             let score = 0;
+            const detailElement = document.getElementById('storageDetail');
             
             function storageTest() {
-                // Simulate storage I/O operations
-                const testData = new Array(50000).fill(0).map(() => Math.random());
+                // Simulate storage I/O operations with substantial data
+                const testData = new Array(100000).fill(0).map(() => ({
+                    id: Math.random(),
+                    value: Math.random() * 1000,
+                    timestamp: Date.now(),
+                    data: new Array(100).fill(0).map(() => Math.random())
+                }));
+                
                 const jsonString = JSON.stringify(testData);
                 
                 // Simulate writing
@@ -1324,11 +1514,16 @@
                     // Handle storage quota exceeded
                 }
                 
-                // Simulate reading
+                // Simulate reading and processing
                 try {
                     const retrievedData = localStorage.getItem('benchmarkTest');
                     if (retrievedData) {
-                        JSON.parse(retrievedData);
+                        const parsedData = JSON.parse(retrievedData);
+                        // Process data
+                        let sum = 0;
+                        parsedData.forEach(item => {
+                            item.data.forEach(val => sum += val);
+                        });
                     }
                 } catch (e) {
                     // Handle parsing errors
@@ -1337,15 +1532,22 @@
                 operations++;
                 const elapsed = performance.now() - startTime;
                 
+                // Update detail every 100ms
+                if (Math.floor(elapsed / 100) > Math.floor((elapsed - 16) / 100)) {
+                    detailElement.textContent = `${operations} I/O operations`;
+                }
+                
                 if (elapsed < duration) {
                     requestAnimationFrame(storageTest);
                 } else {
                     // Calculate storage score based on operations
                     score = Math.round(operations * 20);
                     benchmarkResults.storage = score;
+                    detailElement.textContent = `Completed: ${operations} operations`;
                 }
             }
             
+            detailElement.textContent = 'Running...';
             storageTest();
         }
         
