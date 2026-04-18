@@ -16,7 +16,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // Gemini API Key provided by the user
-const GEMINI_API_KEY = "AIzaSyCa4oS6AnLLRZJsC3HBIvEeAwzYRhGdUg4";
+const GEMINI_API_KEY = "";
 const GEMINI_MODEL = "gemini-2.5-flash"; // User specified gemini-2.5-flash
 
 // Get DOM elements
