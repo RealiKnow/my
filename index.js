@@ -3,12 +3,12 @@ import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/
 
 // Firebase configuration (same as your other files)
 const firebaseConfig = {
-    apiKey: "AIzaSyD2e5ZFUMY67KJsUrrflJpSIm1UpE4gn_Q",
-    authDomain: "realauth-f47e3.firebaseapp.com",
-    projectId: "realauth-f47e3",
-    storageBucket: "realauth-f47e3.firebasestorage.app",
-    messagingSenderId: "246570204070",
-    appId: "1:246570204070:web:d89596de8b627467e66d67"
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
 };
 
 // Initialize Firebase
